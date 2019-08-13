@@ -13,9 +13,7 @@ CLI Client to help administration of hashlists and jobs in hashtopolis
 #TODO: Hash identifier
 
 #TODO: list jobs
-#TODO: list hashlists
 #TODO: list agents
-#TODO: list cracked
 
 #TODO: parse Hashes
 
@@ -62,14 +60,12 @@ def main():
         if (check.Auth(config.url, config.token)) == True:
             if (args.CMD == 'cracked'):
                 list.print_cracked(config.url, config.token)
-            elif (args.CMD == 'jobs'):
-                print('list jobs')
             elif (args.CMD == 'agents'):
                 print('list agents')
             elif (args.CMD == 'hashlists'):
                 list.print_hashlists(config.url, config.token)
-            elif (args.CMD == 'wordlists'):
-                print('list wordlists')
+            elif (args.CMD == 'files'):
+                list.print_files(config.url, config.token)
 
         else:
             sys.exit()
