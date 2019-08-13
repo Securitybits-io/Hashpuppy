@@ -1,0 +1,4 @@
+[DEFAULT]
+URL=http://<YOUR-IP>/hashtopolis/api
+CERTVERIFY=False
+TOKEN=<YOUR-TOKEN>

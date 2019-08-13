@@ -1,0 +1,6 @@
+.git
+__pycache__
+conf/api.conf
+test_cred.txt
+*.hashes
+*.wl
