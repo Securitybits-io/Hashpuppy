@@ -23,6 +23,7 @@ import lib.config as config
 import lib.check as check
 import lib.search as search
 import lib.list as list
+import lib.parse as parse
 
 def main():
     parser = argparse.ArgumentParser(prog='hashpuppy', description=prog_desc)
@@ -42,7 +43,13 @@ def main():
     parser_search.add_argument('HASH', help='single hash to search for cracked password')
 
     parser_list = subparsers.add_parser('list', help='Subsection for listing various things')
-    parser_list.add_argument('CMD', help='list [jobs, cracked, agents, hashlists]')
+    parser_list.add_argument('CMD', help='list [files, cracked, hashlists]')
+
+    parser_parse = subparsers.add_parser('parse', help='Subsection for listing various things')
+    parser_parse.add_argument('-f','--file', required=True, help='Input File to parse')
+    parser_parse.add_argument('-o','--output', help='Output file to write')
+    parser_parse.add_argument('-u','--username', default=False, action="store_true", help='Contains Username as first column? (Default False)')
+    parser_parse.add_argument('-i','--id', type=int, default=0, help='Position in file for hash to parse Default=0')
 
     args = parser.parse_args()
 
@@ -60,15 +67,18 @@ def main():
         if (check.Auth(config.url, config.token)) == True:
             if (args.CMD == 'cracked'):
                 list.print_cracked(config.url, config.token)
-            elif (args.CMD == 'agents'):
-                print('list agents')
             elif (args.CMD == 'hashlists'):
                 list.print_hashlists(config.url, config.token)
             elif (args.CMD == 'files'):
                 list.print_files(config.url, config.token)
-
         else:
             sys.exit()
+    elif args.command == 'parse':
+        # print(args.username)
+        # print(args.id)
+        # print (args.file)
+        # print(args.output)
+        parse.parse(config.url, config.token, args.username, args.id, args.file, args.output)
 
     else:
         return
