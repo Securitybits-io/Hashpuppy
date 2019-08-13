@@ -74,12 +74,10 @@ def main():
         else:
             sys.exit()
     elif args.command == 'parse':
-        # print(args.username)
-        # print(args.id)
-        # print (args.file)
-        # print(args.output)
-        parse.parse(config.url, config.token, args.username, args.id, args.file, args.output)
-
+        if (check.Auth(config.url, config.token)) == True:
+            parse.parse(config.url, config.token, args.username, args.id, args.file, args.output)
+        else:
+            sys.exit()
     else:
         return
     return
