@@ -15,8 +15,6 @@ CLI Client to help administration of hashlists and jobs in hashtopolis
 #TODO: list jobs
 #TODO: list agents
 
-#TODO: parse Hashes
-
 import sys
 import argparse
 import lib.config as config

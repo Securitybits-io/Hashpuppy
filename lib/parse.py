@@ -39,11 +39,9 @@ def parse(url, token, username, id, input_path, output_path):
             if(username):
                 if line[id] == crackedCreds[i][0]:
                     credentials.append('{}:{}:{}'.format(line[0],crackedCreds[i][0],crackedCreds[i][1]))
-                    # print('{}:{}:{}'.format(line[0],crackedCreds[i][0],crackedCreds[i][1]))
             else:
                 if line == crackedCreds[i][0]:
                     credentials.append('{}:{}'.format(crackedCreds[i][0],crackedCreds[i][1]))
-                    #print("{}:{}".format(crackedCreds[i][0],crackedCreds[i][1]))
 
     if(output_path == None):
         for line in credentials:
