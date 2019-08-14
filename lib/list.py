@@ -37,22 +37,38 @@ def __get_cracked(url, token, id):
         sys.exit()
     return
 
-def __get_hashlist(url, token):
-    data_gethashlist = {
+def __list_hashlists(url, token):
+    data_listhashlist = {
         "section":"hashlist",
         "request":"listHashlists",
         "accessKey":token
     }
-    hashlists = requests.post(url+"/user.php", json=data_gethashlist, headers=__headers())
+    hashlists = requests.post(url+"/user.php", json=data_listhashlist, headers=__headers())
     if hashlists.status_code == 200:
         return hashlists.json()
     else:
         sys.exit()
     return
 
+def __get_hashlist(url, token, id):
+    data_gethashlist = {
+        "section" :"hashlist",
+        "request": "getHashlist",
+        "hashlistId": int(id),
+        "accessKey": token
+    }
+
+    hashlist = requests.post(url+"/user.php", json=data_gethashlist, headers=__headers())
+    if hashlist.status_code == 200:
+        return hashlist.json()
+    else:
+        sys.exit()
+    return
+
 def get_all_cracked(url, token):
     cracked = []
-    hashlists = __get_hashlist(url, token)
+    hashlists = __list_hashlists(url, token)
+
     for list in hashlists['hashlists']:
         list_cracked = __get_cracked(url, token, list['hashlistId'])
         for hash in list_cracked['cracked']:
@@ -81,8 +97,9 @@ def print_cracked(url, token):
     return
 
 def print_hashlists(url, token):
-    hashlists = __get_hashlist(url, token)
+    hashlists = __list_hashlists(url, token)
     for list in hashlists['hashlists']:
-        print("Id: {:3} | hashtype: {:5} | Hash Count: {:5} | Name: {} ".format(list['hashlistId'],list['hashtypeId'],list['hashCount'], list['name']))
+        hashlist = __get_hashlist(url,token,list['hashlistId'])
+        print("Id: {:3} | hashtype: {:5} | Cracked: {:5}/{:5} | Name: {} ".format(list['hashlistId'],list['hashtypeId'], hashlist['cracked'], list['hashCount'], list['name']))
 
     return

@@ -10,10 +10,9 @@ prog_desc = '''
 CLI Client to help administration of hashlists and jobs in hashtopolis
 '''
 
-#TODO: Hash identifier
-
 #TODO: list jobs
 #TODO: list agents
+#TODO: add jobs, hashlists, wordlists, rules
 
 import sys
 import argparse
