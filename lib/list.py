@@ -100,6 +100,6 @@ def print_hashlists(url, token):
     hashlists = __list_hashlists(url, token)
     for list in hashlists['hashlists']:
         hashlist = __get_hashlist(url,token,list['hashlistId'])
-        print("Id: {:3} | hashtype: {:5} | Cracked: {:5}/{:5} | Name: {} ".format(list['hashlistId'],list['hashtypeId'], hashlist['cracked'], list['hashCount'], list['name']))
+        print("Id: {:3} | hashtype: {:5} | Cracked: {:6}/{:<6} | Name: {} ".format(list['hashlistId'],list['hashtypeId'], hashlist['cracked'], list['hashCount'], list['name']))
 
     return

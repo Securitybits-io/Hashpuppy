@@ -8,17 +8,19 @@ def __headers():
     return headers
 
 def __data_gethash(token, hash):
-    data_gethash = {
+
+    return data_gethash
+
+def __getHash(url, token, hash):
+    __data_gethash = {
         "section": "hashlist",
         "request": "getHash",
         "hash": hash,
         "accessKey": token
     }
-    return data_gethash
 
-def __getHash(url, token, hash):
     res_gethash = requests.post(url+"/user.php",
-                                json=__data_gethash(token,hash),
+                                json=__data_gethash,
                                 headers=__headers())
     return res_gethash.json()
 
