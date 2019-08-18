@@ -21,6 +21,7 @@ import lib.check as check
 import lib.search as search
 import lib.list as list
 import lib.parse as parse
+import lib.imp as libimport
 
 def main():
     parser = argparse.ArgumentParser(prog='hashpuppy', description=prog_desc)
@@ -48,6 +49,11 @@ def main():
     parser_parse.add_argument('-u','--username', default=False, action="store_true", help='Contains Username as first column? (Default False)')
     parser_parse.add_argument('-i','--id', type=int, default=0, help='Position in file for hash to parse Default=0')
 
+    parser_import = subparsers.add_parser('import', help='Subsection for importing files and hashes.')
+    parser_import.add_argument('CMD', help='list [cracked] to be continues]') #file, rule, hashlist, wordlist
+    parser_import.add_argument('-f','--file', required=True, help='Input File to import.')
+    parser_import.add_argument('-i','--id', type=int, required=True, help='Hashlist to import to.')
+
     args = parser.parse_args()
 
     if args.command == 'check':
@@ -73,6 +79,12 @@ def main():
     elif args.command == 'parse':
         if (check.Auth(config.url, config.token)) == True:
             parse.parse(config.url, config.token, args.username, args.id, args.file, args.output)
+        else:
+            sys.exit()
+    elif args.command == 'import':
+        if (check.Auth(config.url, config.token)) == True:
+            if (args.CMD == 'cracked'):
+                libimport.importCracked(config.url, config.token, args.file, args.id)
         else:
             sys.exit()
     else:
