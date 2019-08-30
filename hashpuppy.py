@@ -12,7 +12,8 @@ CLI Client to help administration of hashlists and jobs in hashtopolis
 
 #TODO: list jobs
 #TODO: list agents
-#TODO: add jobs, hashlists, wordlists, rules
+#TODO: jobs - add, list, remove
+#TODO: import - cracked, hashlists, wordlists, rules
 
 import sys
 import argparse
@@ -52,7 +53,7 @@ def main():
     parser_import = subparsers.add_parser('import', help='Subsection for importing files and hashes.')
     parser_import.add_argument('CMD', help='list [cracked] to be continues]') #file, rule, hashlist, wordlist
     parser_import.add_argument('-f','--file', required=True, help='Input File to import.')
-    parser_import.add_argument('-i','--id', type=int, required=True, help='Hashlist to import to.')
+    parser_import.add_argument('-i','--id', type=int, help='Hashlist to import to.')
 
     args = parser.parse_args()
 
@@ -84,7 +85,11 @@ def main():
     elif args.command == 'import':
         if (check.Auth(config.url, config.token)) == True:
             if (args.CMD == 'cracked'):
-                libimport.importCracked(config.url, config.token, args.file, args.id)
+                if (args.file != None) and (args.id != None):
+                    libimport.importCracked(config.url, config.token, args.file, args.id)
+                else:
+                    print('Please Specify file (-f) and ID (-i) to import')
+                    sys.exit()
         else:
             sys.exit()
     else:
